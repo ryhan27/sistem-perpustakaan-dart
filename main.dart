@@ -37,7 +37,7 @@ void main() {
   pinjamBuku(buku, "Basis Data", "dipinjam");
   pinjamBuku(buku, "Python", "tersedia");
 
-  print("\n--- KEMBALIIN BUKU ---");
+  print("--- KEMBALIIN BUKU ---");
   // Coba balikin buku dan cek denda
   kembalikanBuku(buku, "Web Dasar", 0);
   kembalikanBuku(buku, "Python", 4);
