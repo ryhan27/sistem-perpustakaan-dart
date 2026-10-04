@@ -1,126 +1,167 @@
 # Tugas 2 APP MOBILE - Perpustakaan
 
-Nama: Muhamad Rayhan Ramadhansyah (1124160086)
+Nama: Muhamad Rayhan Ramadhansyah
+NIM: 1124160086
 
 # A. Dokumen Analisis
 
 ## 1. Problem Statement
 
-Program ini pada dasarnya dibuat untuk mempermudah petugas dalam mengurus alur pinjam-meminjam buku di perpustakaan. Aturan utamanya, satu orang dibatasi hanya boleh meminjam maksimal 3 buku.
+Program ini dibuat untuk membantu proses peminjaman dan pengembalian buku di perpustakaan. Jumlah buku yang bisa dipinjam dibatasi maksimal 3 buku.
 
-Cara kerjanya cukup ketat: sebelum buku diberikan, program bakal ngecek dulu, apakah jatah pinjam orang tersebut sudah penuh? Lalu, apakah buku yang mau dipinjam itu sedang dipakai orang lain? Kalau salah satu jawabannya iya, peminjaman otomatis ditolak. Selain itu, program ini juga bertugas menghitung tagihan denda keterlambatan saat buku dikembalikan, dengan tarif Rp1.000 untuk setiap hari telat.
+Sebelum meminjam, program akan mengecek jumlah buku yang sudah dipinjam dan mengecek status buku tersebut. Kalau jumlah buku sudah mencapai 3 atau buku sedang dipinjam, maka peminjaman tidak bisa dilakukan.
+
+Program ini juga digunakan untuk menghitung denda ketika buku terlambat dikembalikan. Dendanya adalah Rp1.000 untuk setiap hari keterlambatan.
 
 ## 2. Actor
 
-Aktor utama alias pihak yang mengoperasikan program ini adalah **Petugas Perpustakaan**.
-Nantinya, petugas inilah yang bertugas memasukkan data-data ke dalam sistem, seperti:
+Yang menggunakan program ini adalah petugas perpustakaan.
 
-* Daftar buku apa saja yang saat ini sedang dipinjam.
-* Judul buku baru yang mau dipinjam oleh anggota.
-* Status bukunya (lagi nganggur atau lagi dipinjam).
-* Berapa hari anggota tersebut telat saat mengembalikan buku.
+Petugas memberikan data yang diperlukan, seperti:
+
+* Daftar buku yang sedang dipinjam.
+* Judul buku yang ingin dipinjam.
+* Status buku, apakah tersedia atau sedang dipinjam.
+* Jumlah hari keterlambatan saat mengembalikan buku.
 
 ## 3. Input & Output
 
-### Input (Data yang dimasukkan)
+### Input
 
-| Data | Tipe Data | Contoh Isian |
-| --- | --- | --- |
-| `tas` (Daftar Pinjaman) | `List<String>` | `['Web Dasar', 'Python']` |
-| `judul` | `String` | `'Web Dasar'` |
-| `status` | `String` | `'tersedia'` atau `'dipinjam'` |
-| `telat` | `int` | `4` (hari) |
+| Data   | Tipe Data    | Contoh                  |
+| ------ | ------------ | ----------------------- |
+| buku   | List<String> | ['Web Dasar', 'Python'] |
+| judul  | String       | 'Web Dasar'             |
+| status | String       | 'tersedia'              |
+| telat  | int          | 4                       |
 
-### Output (Hasil yang ditampilkan)
+### Output
 
-Setelah memproses input, program bakal ngasih respon berupa:
+Program akan menampilkan hasil dari proses yang dilakukan, seperti:
 
-* Laporan sukses kalau buku berhasil masuk ke daftar pinjaman.
-* Pesan penolakan (gagal) beserta alasannya, misal karena tas sudah penuh atau buku lagi dipakai.
-* Konfirmasi saat buku dikembalikan.
-* Total tagihan denda keterlambatan (dalam Rupiah).
+* Pesan jika buku berhasil dipinjam.
+* Pesan jika peminjaman gagal karena buku sedang dipinjam.
+* Pesan jika buku berhasil dikembalikan.
+* Jumlah denda jika buku terlambat dikembalikan.
 
 ## 4. Functional Requirement
 
-Biar bisa jalan sesuai harapan, program ini dibekali dengan beberapa fungsi utama:
+Fungsi yang ada di dalam program ini antara lain:
 
-1. Mampu menghitung dan mengecek apakah buku yang dipinjam sudah mencapai limit (3 buku).
-2. Mengecek status ketersediaan buku di rak sebelum diizinkan untuk dipinjam.
-3. Memasukkan judul buku baru ke dalam daftar pinjaman jika lolos semua pengecekan.
-4. Memvalidasi keberadaan buku di dalam daftar saat proses pengembalian.
-5. Menghitung otomatis nominal denda berdasarkan berapa lama hari keterlambatannya.
-6. Mencetak hasil akhir (sukses/gagal/jumlah denda) ke layar secara langsung.
+1. Mengecek apakah jumlah buku yang dipinjam sudah mencapai 3 buku.
+2. Mengecek status buku sebelum dipinjam.
+3. Menambahkan buku ke dalam daftar jika peminjaman berhasil.
+4. Mengecek apakah buku yang akan dikembalikan ada di dalam daftar.
+5. Menghapus buku dari daftar setelah dikembalikan.
+6. Menghitung denda berdasarkan jumlah hari keterlambatan.
+7. Menampilkan hasil dari proses peminjaman dan pengembalian.
 
 ## 5. Business Rules
 
-Ini adalah aturan main wajib (SOP) yang mengikat sistem perpustakaannya:
-
-| Kode | Aturan Main |
-| --- | --- |
-| BR-01 | Anggota perpustakaan cuma boleh bawa pulang maksimal 3 buku. |
-| BR-02 | Buku yang statusnya lagi "dipinjam" haram hukumnya untuk dipinjam lagi. |
-| BR-03 | Kalau telat ngembaliin, dendanya jalan terus Rp1.000 per harinya. |
-| BR-04 | Kalau balikinnya on-time (nggak telat), dendanya otomatis Rp0 (gratis). |
-| BR-05 | Buku cuma bisa diproses untuk dikembalikan kalau datanya memang ada di dalam daftar pinjaman. |
+| Kode  | Aturan                                                                           |
+| ----- | -------------------------------------------------------------------------------- |
+| BR-01 | Buku yang boleh dipinjam maksimal 3 buku.                                        |
+| BR-02 | Buku yang statusnya dipinjam tidak boleh dipinjam lagi.                          |
+| BR-03 | Denda keterlambatan adalah Rp1.000 per hari.                                     |
+| BR-04 | Kalau tidak terlambat, maka denda yang dibayar Rp0.                              |
+| BR-05 | Buku hanya bisa dikembalikan jika ada di dalam daftar buku yang sedang dipinjam. |
 
 ## 6. Decomposition
 
-Biar nggak pusing, logika sistem perpustakaan yang besar ini kita pecah (dekomposisi) jadi bagian-bagian kecil yang lebih fokus:
+Program perpustakaan ini bisa dibagi menjadi beberapa bagian supaya lebih mudah dipahami.
 
 ```text
 Sistem Perpustakaan
-│
-├── Modul Peminjaman
-│   ├── Pengecekan sisa kuota pinjam
-│   ├── Pengecekan status buku
-│   ├── Penambahan buku ke daftar
-│   └── Cetak laporan peminjaman
-│
-├── Modul Pengembalian
-│   ├── Pengecekan kecocokan buku di daftar pinjaman
-│   └── Cetak laporan pengembalian
-│
-└── Modul Denda
-    ├── Pengecekan hari keterlambatan
-    ├── Jika on-time → Bebas denda (Rp0)
-    └── Jika telat → Hari telat × Rp1.000
 
+│
+├── Peminjaman Buku
+│   ├── Cek jumlah buku
+│   ├── Cek status buku
+│   ├── Masukkan buku ke list
+│   └── Tampilkan hasil
+│
+├── Pengembalian Buku
+│   ├── Cek buku ada di list
+│   ├── Hapus buku dari list
+│   └── Tampilkan hasil
+│
+└── Perhitungan Denda
+    ├── Cek jumlah hari terlambat
+    ├── Jika tidak terlambat → Rp0
+    └── Jika terlambat → hari × Rp1.000
 ```
 
 ## 7. Pattern Recognition
 
-Kalau kita perhatikan cara kerja kodenya, ada pola (pattern) kebiasaan yang terus diulang oleh sistem:
+Dari program yang dibuat, ada beberapa pola yang berulang.
 
-* **Pola Validasi Awal:** Tiap kali mau mengeksekusi sesuatu, entah itu minjam atau balikin buku, program pasti selalu nahan prosesnya sebentar buat melakukan pengecekan kondisi (Guard Clause). Kalau nggak valid, proses langsung dipotong/berhenti.
-* **Pola Perhitungan:** Denda selalu dihitung dengan rumus matematika sederhana yang statis: `jumlah hari x 1000`, berapapun harinya.
+Pertama, setiap kali ingin meminjam buku, program selalu mengecek jumlah buku terlebih dahulu. Setelah itu baru mengecek apakah buku tersebut sedang dipinjam atau tidak.
+
+Kedua, saat mengembalikan buku, program mengecek terlebih dahulu apakah buku tersebut ada di dalam list.
+
+Ketiga, untuk denda, perhitungannya selalu berdasarkan jumlah hari keterlambatan. Kalau terlambat 1 hari maka dendanya Rp1.000, kalau 4 hari maka Rp4.000.
+
+Jadi pola utamanya adalah pengecekan kondisi sebelum menjalankan proses.
 
 ## 8. Abstraction
 
-Di perpustakaan dunia nyata, data buku itu pasti ribet banget (ada nomor ISBN, nama pengarang, tahun terbit, nama peminjam, dsb). Tapi dengan teknik abstraksi, kita buang semua keribetan itu dan cuma ngambil data intinya saja biar programnya enteng:
+Dalam program ini tidak semua hal tentang perpustakaan perlu dibuat. Saya hanya mengambil data yang memang dibutuhkan oleh program.
 
-* `tas`: Cukup menyimpan daftar judulnya saja (List).
-* `judul`: Cuma butuh nama bukunya.
-* `status`: Cukup tau dia lagi "tersedia" atau "dipinjam".
-* `telat`: Cukup angka harinya saja, nggak perlu repot pakai kalender/tanggalan asli.
+Data yang digunakan yaitu:
+
+* buku: untuk menyimpan daftar buku yang sedang dipinjam.
+* judul: untuk menyimpan nama atau judul buku.
+* status: untuk mengetahui apakah buku tersedia atau sedang dipinjam.
+* telat: untuk menyimpan jumlah hari keterlambatan.
+
+Program juga menggunakan beberapa fungsi:
+
+```text
+batasPinjam()
+```
+
+Untuk mengecek apakah jumlah buku sudah mencapai batas maksimal.
+
+```text
+pinjamBuku()
+```
+
+Untuk menjalankan proses peminjaman buku.
+
+```text
+hitungDenda()
+```
+
+Untuk menghitung denda keterlambatan.
+
+```text
+kembalikanBuku()
+```
+
+Untuk menjalankan proses pengembalian buku dan menghitung dendanya.
 
 ## 9. Algorithm
 
-### Alur Cerita Peminjaman Buku
+### Algoritma Peminjaman Buku
 
-1. Program nerima request pinjam dengan menyertakan daftar tas, judul, dan status bukunya.
-2. Pertama, program ngecek isi tas. Kalau isinya udah 3, request langsung ditolak (berhenti).
-3. Kalau tas masih muat, program lanjut ngecek status bukunya. Kalau statusnya lagi "dipinjam", request juga ditolak.
-4. Kalau tas masih muat dan bukunya nganggur, judul buku itu akhirnya sah dimasukkan ke dalam daftar tas.
-5. Terakhir, program nampilin pesan sukses.
+1. Program menerima data buku, judul buku, dan status buku.
+2. Program mengecek jumlah buku yang sudah dipinjam.
+3. Jika jumlahnya sudah 3 buku, peminjaman ditolak.
+4. Jika jumlahnya belum 3 buku, program mengecek status buku.
+5. Jika statusnya dipinjam, peminjaman ditolak.
+6. Jika statusnya tersedia, buku dimasukkan ke dalam list.
+7. Program menampilkan pesan bahwa buku berhasil dipinjam.
 
-### Alur Cerita Pengembalian Buku
+### Algoritma Pengembalian Buku
 
-1. Program nerima request balikin buku beserta info telat berapa hari.
-2. Program ngecek ke dalam tas, benar nggak sih buku itu ada di sana?
-3. Kalau ternyata nggak ada, program langsung ngasih tau "Buku ini nggak ada di daftar pinjaman".
-4. Kalau bukunya memang ada, program lanjut ngitung dendanya.
-5. Kalau telatnya 0 hari, dendanya Rp0. Tapi kalau telatnya lebih dari 0, harinya dikali Rp1.000.
-6. Program mencetak laporan sukses mengembalikan beserta nominal dendanya.
+1. Program menerima judul buku dan jumlah hari keterlambatan.
+2. Program mengecek apakah buku tersebut ada di dalam list.
+3. Jika tidak ada, program memberi tahu bahwa buku tersebut tidak sedang dipinjam.
+4. Jika ada, buku dihapus dari list.
+5. Program menghitung denda.
+6. Jika tidak terlambat, denda adalah Rp0.
+7. Jika terlambat, jumlah hari dikalikan Rp1.000.
+8. Program menampilkan jumlah denda.
 
 ## 10. Flowchart
 
@@ -128,57 +169,62 @@ Di perpustakaan dunia nyata, data buku itu pasti ribet banget (ada nomor ISBN, n
 [ START ]
     │
     ▼
-Siapkan daftar pinjaman (tas)
+Siapkan list buku
     │
     ▼
-Terima judul & status buku buat dipinjam
+Masukkan judul dan status buku
     │
     ▼
-Isi tas sudah mencapai 3?
+Apakah jumlah buku sudah 3?
     │
-  YA ─────────► Gagal: Limit 3 buku habis
+  YA ─────────► Gagal: Maksimal 3 buku
     │
- TIDAK
-    │
-    ▼
-Status bukunya "dipinjam"?
-    │
-  YA ─────────► Gagal: Buku sedang dipakai orang
-    │
- TIDAK
+  TIDAK
     │
     ▼
-Tambahkan judul buku ke tas pinjaman
+Apakah buku sedang dipinjam?
+    │
+  YA ─────────► Gagal: Buku sedang dipinjam
+    │
+  TIDAK
     │
     ▼
-Cetak pesan: Sukses minjam buku
+Tambahkan buku ke list
     │
     ▼
-Terima judul buku & info hari telat buat dikembalikan
+Berhasil meminjam buku
     │
     ▼
-Bukunya terdaftar di dalam tas?
+Masukkan judul buku dan jumlah hari terlambat
     │
- TIDAK ───────► Gagal: Buku tidak pernah dipinjam
+    ▼
+Apakah buku ada di list?
+    │
+  TIDAK ───────► Buku tidak sedang dipinjam
     │
    YA
     │
     ▼
-Apakah telatnya lebih dari 0 hari?
+Hapus buku dari list
     │
- TIDAK ───────► Total denda = Rp0
+    ▼
+Berhasil mengembalikan buku
+    │
+    ▼
+Apakah terlambat lebih dari 0 hari?
+    │
+  TIDAK ───────► Denda Rp0
     │
    YA
     │
     ▼
-Total denda = hari telat × Rp1.000
+Denda = hari × Rp1.000
     │
     ▼
-Cetak pesan: Sukses balikin buku + Jumlah denda
+Tampilkan denda
     │
     ▼
 [ END ]
-
 ```
 
 ## 11. Pseudocode
@@ -186,63 +232,63 @@ Cetak pesan: Sukses balikin buku + Jumlah denda
 ```text
 START
 
-FUNCTION limitPenuh(total)
-    RETURN total >= 3
+FUNCTION batasPinjam(buku)
+    RETURN jumlah buku >= 3
 END FUNCTION
 
-FUNCTION bukuDipakai(status)
-    RETURN status == "dipinjam"
-END FUNCTION
 
-FUNCTION prosesPinjam(tas, judul, status)
-    IF limitPenuh(panjang dari tas) THEN
-        PRINT "Gagal: Tas penuh, tolak " + judul
-        RETURN FALSE
+FUNCTION pinjamBuku(buku, judul, status)
+    IF batasPinjam(buku) THEN
+        PRINT "Gagal: Maksimal hanya 3 buku"
+        RETURN
     END IF
 
-    IF bukuDipakai(status) THEN
-        PRINT "Gagal: Buku " + judul + " sedang dipakai"
-        RETURN FALSE
+    IF status = "dipinjam" THEN
+        PRINT "Gagal: Buku " + judul + " sedang dipinjam"
+        RETURN
     END IF
 
-    ADD judul TO tas
-    PRINT "Sukses: Meminjam " + judul
-    RETURN TRUE
+    ADD judul TO buku
+    PRINT "Berhasil meminjam " + judul
 END FUNCTION
 
-FUNCTION apakahTelat(hari)
-    RETURN hari > 0
-END FUNCTION
 
-FUNCTION hitungDenda(telat)
-    IF NOT apakahTelat(telat) THEN
-        RETURN 0
-    END IF
-    RETURN telat * 1000
-END FUNCTION
-
-FUNCTION prosesKembali(tas, judul, telat)
-    IF judul tidak ada di dalam tas THEN
-        PRINT "Gagal: " + judul + " tidak ada di tas"
-        RETURN FALSE
+FUNCTION hitungDenda(hari)
+    IF hari > 0 THEN
+        RETURN hari × 1000
     END IF
 
-    PRINT "Sukses: Balikin " + judul + " | Denda: Rp" + hitungDenda(telat)
-    RETURN TRUE
+    RETURN 0
 END FUNCTION
 
-// EKSEKUSI PROGRAM
-SET tas = []
 
-PRINT "--- SKENARIO PINJAM ---"
-CALL prosesPinjam(tas, "Web Dasar", "tersedia")
-CALL prosesPinjam(tas, "basis data", "dipinjam")
-CALL prosesPinjam(tas, "Python", "tersedia")
+FUNCTION kembalikanBuku(buku, judul, telat)
+    IF judul tidak ada di dalam buku THEN
+        PRINT "Buku " + judul + " tidak dipinjam"
+        RETURN
+    END IF
 
-PRINT "--- SKENARIO DENDA HARIAN ---"
-CALL prosesKembali(tas, "Web Dasar", 0)
-CALL prosesKembali(tas, "Python", 4)
+    REMOVE judul FROM buku
+
+    PRINT "Berhasil mengembalikan " + judul
+    PRINT "Denda: Rp" + hitungDenda(telat)
+END FUNCTION
+
+
+START PROGRAM
+
+SET buku = []
+
+PRINT "--- PINJAM ---"
+
+CALL pinjamBuku(buku, "Web Dasar", "tersedia")
+CALL pinjamBuku(buku, "Basis Data", "dipinjam")
+CALL pinjamBuku(buku, "Python", "tersedia")
+
+PRINT "--- KEMBALIKAN BUKU ---"
+
+CALL kembalikanBuku(buku, "Web Dasar", 0)
+CALL kembalikanBuku(buku, "Python", 4)
 
 END
-
 ```
