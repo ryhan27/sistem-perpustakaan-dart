@@ -1,8 +1,7 @@
 # Tugas 2 APP MOBILE - Perpustakaan
 
-Nama: Muhamad Rayhan Ramadhansyah
-NIM: 1124160086
-Kelas: -
+Nama: Muhamad Rayhan Ramadhansyah (1124160086)
+
 
 # A. Dokumen Analisis
 
