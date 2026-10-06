@@ -2,7 +2,6 @@
 
 Nama: Muhamad Rayhan Ramadhansyah (1124160086)
 
-
 # A. Dokumen Analisis
 
 ## 1. Problem Statement
@@ -84,6 +83,7 @@ Sistem Perpustakaan
     ├── Cek jumlah hari terlambat
     ├── Kalau gak terlambat → Rp0
     └── Kalau terlambat → hari × Rp1.000
+```
 
 ## 7. Pattern Recognition
 
