@@ -67,6 +67,9 @@ BR-05: Buku cuma bisa dikembalikan kalau buku tersebut ada di dalam daftar buku 
 
 Sistem Perpustakaan
 
+```text
+Sistem Perpustakaan
+│
 ├── Peminjaman Buku
 │   ├── Cek jumlah buku
 │   ├── Cek status buku
@@ -78,9 +81,9 @@ Sistem Perpustakaan
 │   └── Tampilkan hasil
 │
 └── Perhitungan Denda
-├── Cek jumlah hari terlambat
-├── Kalau gak terlambat → Rp0
-└── Kalau terlambat → hari × Rp1.000
+    ├── Cek jumlah hari terlambat
+    ├── Kalau gak terlambat → Rp0
+    └── Kalau terlambat → hari × Rp1.000
 
 ## 7. Pattern Recognition
 
